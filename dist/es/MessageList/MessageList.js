@@ -150,11 +150,8 @@ var MessageListInner = /*#__PURE__*/function (_React$Component) {
           lastMessageInGroup = _this$getLastMessageO.lastMessageInGroup;
         if (lastElement === snapshot.lastMessageOrGroup.lastElement) {
           // If lastMessageInGroup is defined last element is MessageGroup otherwise its Message
-          if (typeof lastMessageInGroup === "undefined" || lastMessageInGroup === snapshot.lastMessageOrGroup.lastMessageInGroup) {
-            var scrollTop = list.scrollHeight - snapshot.diff + (this.lastClientHeight - list.clientHeight);
-            if (Math.abs(scrollTop - list.scrollTop) < 50) {
-              list.scrollTop = scrollTop;
-            }
+          if (!keepScrollPosition && (typeof lastMessageInGroup === "undefined" || lastMessageInGroup === snapshot.lastMessageOrGroup.lastMessageInGroup)) {
+            list.scrollTop = list.scrollHeight - snapshot.diff + (this.lastClientHeight - list.clientHeight);
           }
         }
         if (snapshot.sticky === true) {
