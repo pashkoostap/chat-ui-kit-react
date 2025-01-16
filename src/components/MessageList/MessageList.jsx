@@ -127,7 +127,7 @@ class MessageListInner extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const {
-      props: { autoScrollToBottom },
+      props: { autoScrollToBottom, keepScrollPosition },
     } = this;
 
     if (typeof snapshot !== "undefined") {
@@ -138,8 +138,10 @@ class MessageListInner extends React.Component {
       if (lastElement === snapshot.lastMessageOrGroup.lastElement) {
         // If lastMessageInGroup is defined last element is MessageGroup otherwise its Message
         if (
-          typeof lastMessageInGroup === "undefined" ||
-          lastMessageInGroup === snapshot.lastMessageOrGroup.lastMessageInGroup
+          !keepScrollPosition &&
+          (typeof lastMessageInGroup === "undefined" ||
+            lastMessageInGroup ===
+              snapshot.lastMessageOrGroup.lastMessageInGroup)
         ) {
           list.scrollTop =
             list.scrollHeight -
@@ -398,6 +400,8 @@ MessageList.propTypes = {
 
   /** Additional classes. */
   className: PropTypes.string,
+
+  keepScrollPosition: PropTypes.bool,
 };
 
 MessageList.defaultProps = {
@@ -409,6 +413,7 @@ MessageList.defaultProps = {
   autoScrollToBottom: true,
   autoScrollToBottomOnMount: true,
   scrollBehavior: "auto",
+  keepScrollPosition: false,
 };
 
 MessageListInner.propTypes = MessageList.propTypes;
